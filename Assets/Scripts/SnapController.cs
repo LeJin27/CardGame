@@ -12,15 +12,35 @@ public class SnapController : MonoBehaviour
 
 
     void Start() {
+        foreach (Draggable draggable in draggableObjects) {
+            draggable.dragEndedCallback = OnDragEnded;
+        }
     }
 
-    private void OnDragEnded(Draggable draggable) {
+    private bool OnDragEnded(Draggable draggable) {
+        //every draggable object will have properties distance and snap point
         float closestDistance = -1;
         Transform closestSnapPoint = null;
+
+        //for every snap point in list
         foreach(Transform snapPoint in snapPoints) {
+            //get distance between all snap points
             float currentDistance = Vector2.Distance(draggable.transform.localPosition, snapPoint.localPosition);
 
+            //always have closesnt distance and closesnt snapoint have a value
+            if (closestSnapPoint == null || currentDistance < closestDistance) {
+                closestSnapPoint = snapPoint;
+                closestDistance = currentDistance;
+            }
+        }
 
+        if (closestSnapPoint != null && closestDistance <= snapRange) {
+            draggable.currentSnapPoint = closestSnapPoint;
+            //draggable.transform.localPosition = closestSnapPoint.localPosition;
+            return true;
+        } else {
+            draggable.currentSnapPoint = null;
+            return false;
 
         }
     }

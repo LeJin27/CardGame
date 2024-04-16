@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Draggable : MonoBehaviour
 {
-    public delegate void DragEndedDelegate(Draggable draggableObject);
+    //instatntiated by snapcontroller
+    public delegate bool DragEndedDelegate(Draggable draggableObject);
     public DragEndedDelegate dragEndedCallback;
+    public Transform currentSnapPoint = null;
 
 
     private bool isDragged = false;
+    private bool isSnapped = false;
     private Vector3 mouseDragStartPosition;
     private Vector3 spriteDragStartPosition;
 
@@ -27,6 +30,17 @@ public class Draggable : MonoBehaviour
     }
     private void OnMouseUp() {
         isDragged = false;
-        dragEndedCallback(this);
+        //call our dummy function
+        isSnapped = dragEndedCallback(this);
+    }
+
+    private void Update() {
+        if (isSnapped && isDragged == false) {
+            //transform.localPosition = currentSnapPoint.localPosition;
+            transform.localPosition = Vector2.Lerp(transform.localPosition, currentSnapPoint.localPosition, Time.deltaTime * 10);
+            Debug.Log("true");
+        } else {
+            Debug.Log("false");
+        }
     }
 }

@@ -21,5 +21,6 @@ public class Card : MonoBehaviour
         this.cost = cost;
         this.damage = damage;
         this.cardDescription = cardDescription;
+    
     }
 }

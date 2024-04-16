@@ -12,8 +12,8 @@ public class Draggable : MonoBehaviour
 
     private bool isDragged = false;
     private bool isSnapped = false;
-    private Vector3 mouseDragStartPosition;
-    private Vector3 spriteDragStartPosition;
+    public Vector3 mouseDragStartPosition;
+    public Vector3 spriteDragStartPosition;
 
 
     

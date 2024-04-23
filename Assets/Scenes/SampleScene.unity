@@ -158,7 +158,7 @@ MonoBehaviour:
   - {fileID: 1204018461}
   draggableObjects:
   - {fileID: 1820708362}
-  snapRange: 0.5
+  snapRange: 2
 --- !u!4 &186339366
 Transform:
   m_ObjectHideFlags: 0
@@ -861,11 +861,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94de76d976be44fa8b8adedd520510c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 4
-  cardName: Dawg
-  cost: 5
-  damage: 3
-  cardDescription: 
 --- !u!1 &2019730669
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,12 +21,29 @@ public class SnapController : MonoBehaviour
         }
     }
 
+
+
+
+
+
+    public void addDraggable(Draggable draggableToAdd) {
+        draggableObjects.Add(draggableToAdd);
+    }
+
+
+
+    public SnapPoint getSnapPoint(int index) {
+        return snapPoints[index];
+    }
+
+
+
+
+
+
     //Used on mosue up in draggable
     private bool OnDragEnded(Draggable draggable) {
 
-        if (!draggableObjects.Contains(draggable)) {
-            return false;
-        }
 
         //every draggable object will have properties distance and snap point
         float closestDistance = -1;
@@ -34,15 +51,23 @@ public class SnapController : MonoBehaviour
 
         //for every snap point in list
         foreach(SnapPoint snapPoint in snapPoints) {
-            //get distance between all snap points
-            float currentDistance = Vector2.Distance(draggable.transform.localPosition, snapPoint.transform.localPosition);
+                //get distance between all snap points
+                float currentDistance = Vector2.Distance(draggable.transform.localPosition, snapPoint.transform.localPosition);
 
-            //always have closesnt distance and closesnt snapoint have a value
-            if (closestSnapPoint == null || currentDistance < closestDistance) {
-                closestSnapPoint = snapPoint;
-                closestDistance = currentDistance;
-            }
+                //always have closesnt distance and closesnt snapoint have a value
+                if (closestSnapPoint == null || currentDistance < closestDistance) {
+                    closestSnapPoint = snapPoint;
+                    closestDistance = currentDistance;
+                }
+
+
+
         }
+        //edge case where they are on top of one noather 
+        if (closestSnapPoint.getDraggable() != null) {
+            return false;
+        }
+
 
         if (closestSnapPoint != null && closestDistance <= snapRange) {
 

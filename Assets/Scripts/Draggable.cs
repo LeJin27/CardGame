@@ -10,8 +10,8 @@ public class Draggable : MonoBehaviour
     private SnapPoint currentSnapPoint = null;
 
 
-    private bool isDragged = false;
-    private bool isSnapped = false;
+    public bool isDragged = false;
+    public bool isSnapped = false;
     public Vector3 mouseDragStartPosition;
     public Vector3 spriteDragStartPosition;
 
@@ -26,6 +26,11 @@ public class Draggable : MonoBehaviour
     
     private void OnMouseDown() {
         isDragged = true;
+
+        if (currentSnapPoint != null) {
+            currentSnapPoint.setDraggable(null);
+        }
+
         mouseDragStartPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         spriteDragStartPosition = transform.localPosition;
     }
@@ -38,6 +43,7 @@ public class Draggable : MonoBehaviour
     private void OnMouseUp() {
         isDragged = false;
         //call our dummy function
+
 
         isSnapped = dragEndedCallback(this);
     }

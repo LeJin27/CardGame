@@ -7,13 +7,20 @@ public class Draggable : MonoBehaviour
     //instatntiated by snapcontroller
     public delegate bool DragEndedDelegate(Draggable draggableObject);
     public DragEndedDelegate dragEndedCallback;
-    public Transform currentSnapPoint = null;
+    private SnapPoint currentSnapPoint = null;
 
 
     private bool isDragged = false;
     private bool isSnapped = false;
     public Vector3 mouseDragStartPosition;
     public Vector3 spriteDragStartPosition;
+
+    public void setSnapPoint(SnapPoint snapObject) {
+        currentSnapPoint = snapObject;
+    }
+
+    private void Start() {
+    }
 
 
     
@@ -31,16 +38,14 @@ public class Draggable : MonoBehaviour
     private void OnMouseUp() {
         isDragged = false;
         //call our dummy function
+
         isSnapped = dragEndedCallback(this);
     }
 
     private void Update() {
+        //animation for snapping
         if (isSnapped && isDragged == false) {
-            //transform.localPosition = currentSnapPoint.localPosition;
-            transform.localPosition = Vector2.Lerp(transform.localPosition, currentSnapPoint.localPosition, Time.deltaTime * 10);
-            Debug.Log("true");
-        } else {
-            Debug.Log("false");
+            transform.localPosition = Vector2.Lerp(transform.localPosition, currentSnapPoint.transform.localPosition, Time.deltaTime * 10);
         }
     }
 }

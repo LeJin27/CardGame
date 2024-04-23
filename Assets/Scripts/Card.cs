@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 [System.Serializable]
 
-public class Card : MonoBehaviour
+public class Card
 {
     public int id;
     public string cardName;
@@ -11,9 +12,6 @@ public class Card : MonoBehaviour
     public int damage;
     public string cardDescription;
 
-    public Card() {
-
-    }
 
     public Card(int id, string cardName, int cost, int damage, string cardDescription) {
         this.id = id;
@@ -23,4 +21,5 @@ public class Card : MonoBehaviour
         this.cardDescription = cardDescription;
     
     }
+
 }

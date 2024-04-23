@@ -2,30 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Snap controller. Manages snapping points and draggable objects
+// Draggable objects can function without the snap controller 
+// Snap controller is used to provide snapping feature to snap points
+
+
 public class SnapController : MonoBehaviour
 {
 
-    public List<Transform> snapPoints;
+    public List<SnapPoint> snapPoints;
     public List<Draggable> draggableObjects;
     public float snapRange = 0.5f;
 
-
-
+    //intialize delegate function for all draggable points (could change )
     void Start() {
         foreach (Draggable draggable in draggableObjects) {
             draggable.dragEndedCallback = OnDragEnded;
         }
     }
 
+    //Used on mosue up in draggable
     private bool OnDragEnded(Draggable draggable) {
+
+        if (!draggableObjects.Contains(draggable)) {
+            return false;
+        }
+
         //every draggable object will have properties distance and snap point
         float closestDistance = -1;
-        Transform closestSnapPoint = null;
+        SnapPoint closestSnapPoint = null;
 
         //for every snap point in list
-        foreach(Transform snapPoint in snapPoints) {
+        foreach(SnapPoint snapPoint in snapPoints) {
             //get distance between all snap points
-            float currentDistance = Vector2.Distance(draggable.transform.localPosition, snapPoint.localPosition);
+            float currentDistance = Vector2.Distance(draggable.transform.localPosition, snapPoint.transform.localPosition);
 
             //always have closesnt distance and closesnt snapoint have a value
             if (closestSnapPoint == null || currentDistance < closestDistance) {
@@ -35,11 +45,15 @@ public class SnapController : MonoBehaviour
         }
 
         if (closestSnapPoint != null && closestDistance <= snapRange) {
-            draggable.currentSnapPoint = closestSnapPoint;
-            //draggable.transform.localPosition = closestSnapPoint.localPosition;
+
+            draggable.setSnapPoint(closestSnapPoint);
+            closestSnapPoint.setDraggable(draggable);
+
+            //if true performs snap operation
             return true;
         } else {
-            draggable.currentSnapPoint = null;
+            draggable.setSnapPoint(null);
+            closestSnapPoint.setDraggable(null);
             return false;
 
         }

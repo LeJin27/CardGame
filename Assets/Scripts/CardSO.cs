@@ -10,6 +10,6 @@ public class CardSO : ScriptableObject
     public new string name;
     public int damage;
     public int health;
-    public string cardDescription;
+    public string description;
     public Sprite artwork;
 }

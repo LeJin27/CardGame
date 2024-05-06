@@ -28,6 +28,7 @@ public class SnapController : MonoBehaviour
 
     public void AddDraggable(Draggable draggableToAdd) {
         draggableObjects.Add(draggableToAdd);
+        draggableToAdd.dragEndedCallback = OnDragEnded;
     }
     public void AddSnapPoint(SnapPoint snapPointToAdd) {
         snapPoints.Add(snapPointToAdd);

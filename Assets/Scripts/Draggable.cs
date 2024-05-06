@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Draggable : MonoBehaviour
@@ -14,13 +15,32 @@ public class Draggable : MonoBehaviour
     public bool isSnapped = false;
     public Vector3 mouseDragStartPosition;
     public Vector3 spriteDragStartPosition;
+    private Vector3 originalScale;
 
     public void setSnapPoint(SnapPoint snapObject) {
         currentSnapPoint = snapObject;
     }
 
     private void Start() {
+    	originalScale = transform.localScale;
     }
+
+
+	void OnMouseOver()
+	{
+    	Vector3 scaleChange = new Vector3(0.3f, 0.3f, 0.3f);
+    	transform.localScale += scaleChange * Time.deltaTime;
+    	Mathf.Clamp(transform.localScale.x, 1, 1.4f);
+    	Mathf.Clamp(transform.localScale.y, 1, 1.4f);
+    	Mathf.Clamp(transform.localScale.z, 1, 1.4f);
+    	//If your mouse hovers over the GameObject with the script attached, output this message
+    	Debug.Log("Mouse is over GameObject.");
+	}
+
+	private void OnMouseExit() {
+    	transform.localScale = originalScale;
+	}
+
 
 
     

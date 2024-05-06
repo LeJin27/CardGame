@@ -6,6 +6,8 @@ public class BoardController : MonoBehaviour
 {
     [SerializeField] SnapController snapController;
     [SerializeField] Draggable spawnDraggable;
+    [SerializeField] SnapPoint spawnSnapPoint;
+    [SerializeField] GameObject snapPointParent;
 
 
     private void Update() {
@@ -14,22 +16,39 @@ public class BoardController : MonoBehaviour
     }
 
     private void Start() {
+        SpawnHandPoints(1);
 
     }
+
+
+
+    private void SpawnHandPoints(int pointAmount) {
+        var screenBottomCenter = new Vector3(Screen.width/2, Screen.height/5, 0); 
+        var inWorld = Camera.main.ScreenToWorldPoint(screenBottomCenter);
+        inWorld.z = 0;
+        for (int i = 0; i < pointAmount; i ++) {
+            SnapPoint snapPoint  = Instantiate(spawnSnapPoint, snapPointParent.transform.parent);
+            snapPoint.transform.position = inWorld;
+            snapController.AddSnapPoint(snapPoint);
+
+        }
+
+    }
+
 
 
     public void SpawnCard() {
         Draggable spawnCard = Instantiate(spawnDraggable);
         spawnCard.transform.position = new Vector3(0, 0 ,0);
 
-        snapController.addDraggable(spawnCard);
+        snapController.AddDraggable(spawnCard);
 
     }
 
 
     //retrieves Card object
     public Card GetCardAtIndex(int snapIndex) {
-        SnapPoint snapPoint = snapController.getSnapPoint(snapIndex);
+        SnapPoint snapPoint = snapController.GetSnapPoint(snapIndex);
         Draggable draggable = snapPoint.getDraggable();
 
         Card currentCard = draggable.GetComponentInChildren<Card>();

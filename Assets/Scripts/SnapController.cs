@@ -26,13 +26,16 @@ public class SnapController : MonoBehaviour
 
 
 
-    public void addDraggable(Draggable draggableToAdd) {
+    public void AddDraggable(Draggable draggableToAdd) {
         draggableObjects.Add(draggableToAdd);
+    }
+    public void AddSnapPoint(SnapPoint snapPointToAdd) {
+        snapPoints.Add(snapPointToAdd);
     }
 
 
 
-    public SnapPoint getSnapPoint(int index) {
+    public SnapPoint GetSnapPoint(int index) {
         return snapPoints[index];
     }
 
@@ -44,13 +47,13 @@ public class SnapController : MonoBehaviour
     //Used on mosue up in draggable
     private bool OnDragEnded(Draggable draggable) {
 
-
         //every draggable object will have properties distance and snap point
         float closestDistance = -1;
         SnapPoint closestSnapPoint = null;
 
         //for every snap point in list
         foreach(SnapPoint snapPoint in snapPoints) {
+            Debug.Log("dtest");
                 //get distance between all snap points
                 float currentDistance = Vector2.Distance(draggable.transform.localPosition, snapPoint.transform.localPosition);
 
@@ -59,8 +62,6 @@ public class SnapController : MonoBehaviour
                     closestSnapPoint = snapPoint;
                     closestDistance = currentDistance;
                 }
-
-
 
         }
         //edge case where they are on top of one noather 

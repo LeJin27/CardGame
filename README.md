@@ -20,3 +20,10 @@ This is a snappoint node. Used by snap controller to snap draggable objects. The
 Contains properties of card scriptable object. 
 
 - public getters and setters
+
+### Snapcontroller
+We add snap points to snappoint list using serialize field. 
+
+- public void addDraggable(Draggable draggableToAdd): adds draggable to draggable list
+
+- public SnapPoint getSnapPoint(int index): returns snap point at current index

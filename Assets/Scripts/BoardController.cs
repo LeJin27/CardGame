@@ -14,7 +14,6 @@ public class BoardController : MonoBehaviour
     }
 
     private void Start() {
-        ///SpawnCard();
 
     }
 

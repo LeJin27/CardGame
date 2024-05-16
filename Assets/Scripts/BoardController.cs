@@ -8,6 +8,7 @@ public class BoardController : MonoBehaviour
     [SerializeField] Draggable spawnDraggable;
     [SerializeField] SnapPoint spawnSnapPoint;
     [SerializeField] GameObject snapPointParent;
+    [SerializeField] GameObject draggableParent;
 
 
     private void Update() {
@@ -40,7 +41,7 @@ public class BoardController : MonoBehaviour
 
 
     public void SpawnCard() {
-        Draggable spawnCard = Instantiate(spawnDraggable);
+        Draggable spawnCard = Instantiate(spawnDraggable, draggableParent.transform);
         spawnCard.transform.position = new Vector3(0, 0 ,0);
 
         snapController.AddDraggable(spawnCard);

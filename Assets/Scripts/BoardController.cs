@@ -16,7 +16,9 @@ public class BoardController : MonoBehaviour
     }
 
     private void Start() {
-        SpawnHandPoints(1);
+
+
+        
 
     }
 
